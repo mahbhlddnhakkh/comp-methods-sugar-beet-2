@@ -1,0 +1,8 @@
+*/__pycache__/*
+/venv/*
+/idea/*
+/.vscode/*
+#/test*.txt
+/Эксперимент*.*
+/Анализ экспериментов.csv
+/crashtest.py
