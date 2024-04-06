@@ -7,7 +7,7 @@ def do_experiment(m: np.ndarray, exp_res: exp_res_props) -> None:
 
     def do_experiment_iteration(exp_res: exp_res_props, i: int, func, m: np.ndarray, *args) -> None:
         n = m.shape[0]
-        tmp_res = func(m, *args)
+        tmp_res = func(exp_res, m, *args)
         #exp_res.last_res[i] = tmp_res
         row_ind = np.argsort(tmp_res[0])
         col_ind = np.arange(n, dtype=int)

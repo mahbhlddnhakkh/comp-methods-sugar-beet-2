@@ -1,4 +1,4 @@
-from src.algorithms import hungarian_max, hungarian_min, greedy, lean, lean_greedy, greedy_lean
+from src.algorithms import hungarian_max, hungarian_min, greedy, lean, lean_greedy, greedy_lean, TkG, CTG, Gk
 from src.util import generate_matrix_main, generate_matrix_main_ripening, exp_res_props
 import math
 
@@ -43,6 +43,32 @@ algs = [
                 "name": "theta",
                 "type": int,
                 "default": lambda exp_res: 0 if (exp_res.params == None or not "mu" in exp_res.params) else exp_res.params["mu"],
+            },
+        ],
+    },
+    {
+        "name": "T(k)G",
+        "func": TkG,
+        "params": [
+            {
+                "name": "k",
+                "type": int,
+                "default": lambda exp_res: 1
+            },
+        ],
+    },
+    {
+        "name": "CTG",
+        "func": CTG,
+    },
+    {
+        "name": "G^k",
+        "func": Gk,
+        "params": [
+            {
+                "name": "k",
+                "type": int,
+                "default": lambda exp_res: 1
             },
         ],
     },

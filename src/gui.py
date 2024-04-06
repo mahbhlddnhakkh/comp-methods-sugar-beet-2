@@ -1,6 +1,6 @@
 import dearpygui.dearpygui as dpg
 from src.gui_util import generate_input_for_exp, select_algs, fix_range_min_max_input_exp, generate_result_plot_table
-from src.config import CFG, float_precision
+#from src.config import CFG, float_precision
 from src.util import exp_res_props, work_prop, convert_to_p_matrix
 from src.experiment import do_experiment
 from src.user_config import algs, exp_modes, exp_modes_func
@@ -11,7 +11,7 @@ import copy
 
 exp_modes_keys = tuple(list(exp_modes.keys()).copy())
 exp_modes = (copy.deepcopy(exp_modes), copy.deepcopy(exp_modes))
-last_exp_mode = [0, 0]
+last_exp_mode = [1, 1]
 
 def create_gui():
     '''
@@ -31,16 +31,6 @@ def create_gui():
         work.working_directory = tmp
         dpg.set_value(working_directory_input, work.working_directory)
 
-    def fill_experiment_tab():
-        '''
-        SAMPLE TEXT
-        '''
-        dpg.set_value(n_input, work.exp_res[0].n)
-        dpg.delete_item(parameters_table, children_only=True)
-        construct_parameters_table(parameters_table)
-        if (work.exp_res[0].average_error != None):
-            calc_btn_callback(False)
-
     def choose_from_file_btn_callback():
         '''
         Button "Выбрать из файла"
@@ -53,7 +43,11 @@ def create_gui():
         work.get_from_file(path)
         choose_working_directory_callback(os.path.dirname(path))
         dpg.delete_item(res_group, children_only=True)
-        fill_experiment_tab()
+        dpg.set_value(n_input, work.exp_res[0].n)
+        dpg.delete_item(parameters_table, children_only=True)
+        construct_parameters_table(parameters_table)
+        if (work.exp_res[0].average_error != None):
+            calc_btn_callback(False)
 
     def set_n(sender, app_data):
         '''
@@ -83,8 +77,8 @@ def create_gui():
                     default = work.exp_res[i].params[p["name"]]
                 generate_input_for_exp(p, default)
             dpg.pop_container_stack()
-        switch_mode(mode_radio_btn, exp_modes_keys[work.exp_res[i].exp_mode], i)
         dpg.set_value(mode_radio_btn, exp_modes_keys[work.exp_res[i].exp_mode])
+        switch_mode(mode_radio_btn, exp_modes_keys[work.exp_res[i].exp_mode], i)
 
     def construct_parameters_table(table):
         '''
@@ -206,7 +200,7 @@ def create_gui():
     mode_groups = []
     parameters_table = dpg.add_table(header_row=False, width=-1, borders_innerH=True, borders_outerH=True, borders_innerV=True, borders_outerV=True)
     for i in range(2):
-        work.exp_res[i].exp_mode = 0
+        work.exp_res[i].exp_mode = last_exp_mode[i]
     construct_parameters_table(parameters_table)
     dpg.add_button(label="Скопировать параметры из P в P0", callback=copy_from_p_p0)
     m_algs = select_algs(work.exp_res[0])

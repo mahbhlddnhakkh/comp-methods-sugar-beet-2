@@ -5,3 +5,4 @@ class CFG:
     debug = True
 
 float_precision = 4
+float_precision_str = f"%.{float_precision}f"

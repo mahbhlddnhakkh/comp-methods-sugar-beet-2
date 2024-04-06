@@ -1,7 +1,7 @@
 import dearpygui.dearpygui as dpg
 from src.user_config import algs
 from src.util import work_prop
-from src.config import float_precision, CFG
+from src.config import float_precision_str, CFG
 from src.themes import dpg_plot_line_themes, dpg_plot_line_names, markers_count
 from typing import List, Dict, List
 import numpy as np
@@ -253,7 +253,7 @@ def generate_result_table_row(exp_res, tb):
         dpg.add_text(tmp)
         for i in range(len(algs)):
             if (exp_res.chosen_algs[i]):
-                dpg.add_text(f"%.{float_precision}f" % exp_res.phase_averages[i][-1] + "\n" + f"%.{float_precision}f" % exp_res.average_error[i])
+                dpg.add_text(float_precision_str % exp_res.phase_averages[i][-1] + "\n" + float_precision_str % exp_res.average_error[i])
             else:
                 dpg.add_text("")
     return r

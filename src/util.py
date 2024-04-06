@@ -90,6 +90,8 @@ class exp_res_props:
     def __repr__(self):
         return f'exp_res_props({self.__dict__})'
 
+    def get_mu(self) -> int:
+        return 0 if (self.params == None or not "mu" in self.params) else self.params["mu"]
 
 class work_prop:
     '''
@@ -189,12 +191,6 @@ def generate_matrix_main(n: int, a_i: Tuple[float, float], b_ij: Tuple[float, fl
     m[:, 0] = do_rand((n, ), *convert_special_range_to_range(a_i))
     m[:, 1:n] = do_rand((n, n-1), *convert_special_range_to_range(b_ij))
     return m
-
-def test_read_file(file_path: str) -> bool:
-    '''
-    Tests if able to read file
-    '''
-    return os.access(file_path, os.R_OK)
 
 def clamp(min_val, val, max_val):
     if (val < min_val): return min_val
