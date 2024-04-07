@@ -2,7 +2,7 @@ import dearpygui.dearpygui as dpg
 
 with dpg.theme() as highlight_cell_theme:
     with dpg.theme_component(dpg.mvAll):
-        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (152, 152, 152, 255))
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (2, 48, 32, 255))
 
 # TODO: what about filled and open markers? It will be +7 additional markers. Don't know how to use marker name in plot legend in that case though.
 # https://matplotlib.org/3.2.2/gallery/lines_bars_and_markers/marker_fillstyle_reference.html <- simple

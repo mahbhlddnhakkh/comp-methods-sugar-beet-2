@@ -2,7 +2,7 @@ import dearpygui.dearpygui as dpg
 from src.user_config import algs
 from src.util import work_prop
 from src.config import float_precision_str, CFG
-from src.themes import dpg_plot_line_themes, dpg_plot_line_names, markers_count
+from src.themes import dpg_plot_line_themes, dpg_plot_line_names, markers_count, highlight_cell_theme
 from typing import List, Dict, List
 import numpy as np
 import os
@@ -251,11 +251,20 @@ def generate_result_table_row(exp_res, tb):
                 for ee in range(len(cur_params)):
                     tmp += cur_params[ee]["name"] + " = " + str(exp_res.params_algs_specials[e][ee]) + '\n'
         dpg.add_text(tmp)
+        best_alg_max = 0.0
+        best_alg = 0
         for i in range(len(algs)):
             if (exp_res.chosen_algs[i]):
-                dpg.add_text(float_precision_str % exp_res.phase_averages[i][-1] + "\n" + float_precision_str % exp_res.average_error[i])
+                dpg.add_input_text(default_value=float_precision_str % exp_res.phase_averages[i][-1] + "\n" + float_precision_str % exp_res.average_error[i], width=-1, readonly=True, multiline=True)
+                #dpg.add_text(float_precision_str % exp_res.phase_averages[i][-1] + "\n" + float_precision_str % exp_res.average_error[i])
+                if (best_alg_max < exp_res.phase_averages[i][-1] and i != 0):
+                    best_alg = i
+                    best_alg_max = exp_res.phase_averages[i][-1]
             else:
                 dpg.add_text("")
+        if (best_alg != 0):
+            r_children = dpg.get_item_children(r, 1)
+            dpg.bind_item_theme(r_children[len(r_children)-len(algs)+best_alg], highlight_cell_theme)
     return r
 
 def generate_result_plot(exp_res, add_save_button=True, add_edit_size_button=True, legend_outside=True):

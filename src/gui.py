@@ -162,6 +162,15 @@ def create_gui():
                 do_experiment(m, exp_res)
                 exp_res.calculate_average_error(len(algs))
         dpg.push_container_stack(res_group)
+        best_alg_max = 0.0
+        best_alg = 0
+        for i in range(1, len(algs)):
+            if (work.exp_res[0].chosen_algs[i] and best_alg_max < work.exp_res[0].phase_averages[i][-1]):
+                best_alg = i
+                best_alg_max = work.exp_res[0].phase_averages[i][-1]
+        if (best_alg != 0):
+            dpg.add_text(f"Лучшая стратегия для P - {algs[best_alg]['name']} с сахаристостью {work.exp_res[0].phase_averages[best_alg][-1]} и относительной погрешностью {work.exp_res[0].average_error[best_alg]}")
+            dpg.add_text(f"Результат стратегии '{algs[best_alg]['name']}' для P0: сахаристость {work.exp_res[0].phase_averages[best_alg][-1]} и относительная погрешность {work.exp_res[0].average_error[best_alg]}")
         tb, dpg_plot = generate_result_plot_table(work)
         dpg.pop_container_stack()
 
