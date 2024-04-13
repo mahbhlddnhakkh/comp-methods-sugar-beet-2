@@ -298,8 +298,8 @@ def generate_result_plot(exp_res, add_save_button=True, add_edit_size_button=Tru
         for i in range(len(algs)):
             if (exp_res.chosen_algs[i]):
                 j_c = j % markers_count
-                #dpg.bind_item_theme(dpg.add_line_series(x_arr, exp_res.phase_averages[i], label=f'{algs[i]["name"]} [{dpg_plot_line_names[j_c]}]', parent=y), dpg_plot_line_themes[j_c])
-                dpg.bind_item_theme(dpg.add_line_series(x_arr, exp_res.phase_averages[i], label=f'{algs[i]["name"]}', parent=y), dpg_plot_line_themes[j_c])
+                dpg.bind_item_theme(dpg.add_line_series(x_arr, exp_res.phase_averages[i], label=f'{algs[i]["name"]} [{dpg_plot_line_names[j_c]}]', parent=y), dpg_plot_line_themes[j_c])
+                #dpg.bind_item_theme(dpg.add_line_series(x_arr, exp_res.phase_averages[i], label=f'{algs[i]["name"]}', parent=y), dpg_plot_line_themes[j_c])
                 j += 1
     if (add_edit_size_button):
         with dpg.group(horizontal=True):
