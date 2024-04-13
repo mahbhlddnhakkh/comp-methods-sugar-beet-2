@@ -64,7 +64,7 @@ def create_gui():
         work.exp_res[i].exp_name = exp_names[i]
         with dpg.group(horizontal=True):
             dpg.add_text("Количество экспериментов")
-            exp_count_inputs[i] = dpg.add_input_int(min_value=1, default_value=1, min_clamped=True)
+            exp_count_inputs[i] = dpg.add_input_int(min_value=1, default_value=work.exp_res[i].exp_count, min_clamped=True)
         with dpg.group(horizontal=True):
             dpg.add_text("Режим")
             mode_radio_btn = dpg.add_radio_button(items=exp_modes_keys, horizontal=True, user_data=i, callback=switch_mode)
