@@ -63,6 +63,9 @@ def create_gui():
         dpg.add_text(exp_names[i])
         work.exp_res[i].exp_name = exp_names[i]
         with dpg.group(horizontal=True):
+            dpg.add_text("Количество экспериментов")
+            exp_count_inputs[i] = dpg.add_input_int(min_value=1, default_value=1, min_clamped=True)
+        with dpg.group(horizontal=True):
             dpg.add_text("Режим")
             mode_radio_btn = dpg.add_radio_button(items=exp_modes_keys, horizontal=True, user_data=i, callback=switch_mode)
         mode_groups.append(tuple([dpg.add_group(show=False) for key in exp_modes_keys]))
@@ -112,6 +115,7 @@ def create_gui():
             fix_range_min_max_input_exp(exp_modes[i][cur_exp_mode])
             exp_res = work.exp_res[i]
             exp_res.n = dpg.get_value(n_input)
+            exp_res.exp_count = dpg.get_value(exp_count_inputs[i])
             exp_res.exp_mode = last_exp_mode[i]
             exp_res.params = {}
             for p in exp_modes[i][cur_exp_mode]:
@@ -157,9 +161,10 @@ def create_gui():
                 cur_exp_mode = exp_modes_keys[last_exp_mode[i]]
                 exp_res = work.exp_res[i]
                 exp_res.init(len(algs))
-                m = exp_modes_func[last_exp_mode[i]](exp_res.n, **exp_res.params)
-                convert_to_p_matrix(m)
-                do_experiment(m, exp_res)
+                for j in range(work.exp_res[i].exp_count):
+                    m = exp_modes_func[last_exp_mode[i]](exp_res.n, **exp_res.params)
+                    convert_to_p_matrix(m)
+                    do_experiment(m, exp_res)
                 exp_res.calculate_average_error(len(algs))
         dpg.push_container_stack(res_group)
         best_alg_max = 0.0
@@ -201,6 +206,7 @@ def create_gui():
     dpg.add_separator()
     dpg.add_button(label="Выбрать из файла", callback=choose_from_file_btn_callback)
     dpg.add_separator()
+    exp_count_inputs = [None, None]
     with dpg.group(horizontal=True):
         dpg.add_text("Введите n")
         n_input = dpg.add_input_int(min_value=3, default_value=20, min_clamped=True, callback=set_n)
@@ -216,6 +222,5 @@ def create_gui():
     with dpg.group(horizontal=True):
         dpg.add_button(label="Вычислить", callback=lambda: calc_btn_callback())
         dpg.add_button(label="Сохранить", callback=save_btn_callback)
-        pass
     dpg.add_text("")
     res_group = dpg.add_group()

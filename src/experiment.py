@@ -12,10 +12,10 @@ def do_experiment(m: np.ndarray, exp_res: exp_res_props) -> None:
         row_ind = np.argsort(tmp_res[0])
         col_ind = np.arange(n, dtype=int)
         phases = [None] * n
-        phases[0] = m[row_ind[0]][col_ind[0]]
+        phases[0] = m[row_ind[0]][col_ind[0]] / exp_res.exp_count
         exp_res.phase_averages[i][0] += phases[0]
         for k in range(1, n):
-            phases[k] = phases[k-1] + m[row_ind[k]][col_ind[k]]
+            phases[k] = phases[k-1] + m[row_ind[k]][col_ind[k]] / exp_res.exp_count
             exp_res.phase_averages[i][k] += phases[k]
 
     for i in range(len(algs)):

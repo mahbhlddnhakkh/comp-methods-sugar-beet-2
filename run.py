@@ -6,7 +6,7 @@ from src.gui import create_gui
 
 def main():
     with dpg.font_registry():
-        with dpg.font("fonts/notomono-regular.ttf", 15, default_font=True) as font:
+        with dpg.font("fonts/notomono-regular.ttf", 18, default_font=True) as font:
             dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
     with dpg.window() as window:
         if (CFG.debug):
@@ -21,7 +21,7 @@ def main():
                     dpg.add_menu_item(label="Show Item Registry", callback=lambda: dpg.show_tool(dpg.mvTool_ItemRegistry))
         create_gui()
     dpg.bind_font(font)
-    dpg.create_viewport(title='comp-methods-sugar-beet-gui', width=1400, height=800, min_width=1080, min_height=500)
+    dpg.create_viewport(title='comp-methods-sugar-beet-gui', width=1400, height=800, min_width=1400, min_height=500)
     dpg.setup_dearpygui()
     dpg.show_viewport()
     dpg.set_primary_window(window, True)

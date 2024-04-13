@@ -157,8 +157,9 @@ def CTG(exp_res, m: np.ndarray) -> Tuple[np.array, float]:
     n = m.shape[0]
     mu = exp_res.get_mu()
     col_ind: np.array = np.zeros(n, dtype=int)
+    sorted_ind: np.array = np.argsort(m[:, 0])
     for i in range(n):
-        col_ind[gamma(i+1)-1] = i
+        col_ind[sorted_ind[gamma(i+1)-1]] = i
     return (col_ind, m[np.arange(n, dtype=int), col_ind].sum())
 
 def Gk(exp_res, m: np.ndarray, k: int) -> Tuple[np.array, float]:

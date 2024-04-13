@@ -218,7 +218,7 @@ def generate_result_table_row(exp_res, tb):
     Generates result table's row from exp_res
     '''
     with dpg.table_row(parent=tb, user_data=exp_res) as r:
-        dpg.add_text(exp_res.exp_name)
+        dpg.add_text(exp_res.exp_name + f"\nКол-во экспериментов: {exp_res.exp_count}")
         tmp = ""
         for key in exp_res.params.keys():
             p = exp_res.params[key]

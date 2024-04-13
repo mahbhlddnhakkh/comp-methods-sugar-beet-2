@@ -10,7 +10,8 @@ class exp_res_props:
     '''
     Represents props of advanced experiment
     '''
-    n: int = 0
+    n: int = 3
+    exp_count: int = 1
     # P or P0
     exp_name: str = None
     # Ripening or without ripening
